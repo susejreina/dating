@@ -1,0 +1,22 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+
+<script type="text/javascript" src="{% static 'dateSite/js/jquery-ui.min.js' %}"></script>
+<script>
+    var percentage, o_album_list, user_pk, client_code, private_collection, o_album_list, is_me, picture_id, client;
+    $(document).ready(function() {
+        percentage = '{{ profile_percentage }}';
+        user = '{{user.username}}';
+        user_pk = '{{ user.pk }}';
+        client_code = '{{ member.clicode }}';
+        private_collection = ('{{ private_collection }}').replace(/[\[\] ]+/g, '').split(',');
+        o_album_list = '{{ album_list|safe|escapejs }}';
+        pictures_description = ('{{ public_album_descriptions|escapejs }}').replace(/[\[\]\']+/g, '').split(', ');
+        pictures_to_upload = false;
+        is_me = (user_pk == client_code ? true : false);
+    });
+</script>
+<script src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
+<script src="{% static 'file_form/file_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/profile.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/chat.js' %}"></script>

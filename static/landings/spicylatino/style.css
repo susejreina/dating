@@ -1,0 +1,29 @@
+body, html { background-color: #000; color: #FFF; min-height: 100vh; height: 100vh; padding: 0; margin: 0; font-size: 14px; }
+
+.main { padding: 0; height: 100%; background-size: cover; background-repeat: no-repeat; background-position: top right; }
+
+.content-logo { display: flex; align-items: center; justify-content: space-between; padding: 15px; width: 100%; padding: 15px; box-sizing: border-box; background: -moz-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 52%); background: -webkit-linear-gradient(left, white 0%, rgba(255, 255, 255, 0) 52%); background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 52%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=  '#ffffff', endColorstr='#00ffffff',GradientType=1 ); }
+
+.content-logo .logo { width: 200px; }
+
+.slogan { margin-right: 15px; font-size: 25px; font-weight: 700; text-shadow: 2px 2px #000; font-family: Verdana; }
+
+.form { width: 350px; height: 380px; background-color: rgba(255, 255, 255, 0.9); padding: 10px 0; position: absolute; /*it can be fixed too*/ left: 0; right: 0; top: 0; bottom: 0; margin: auto; /*this to solve "the content will not be cut when the window is smaller than the content": */ max-width: 100%; max-height: 100%; overflow: auto; font-family: Verdana; text-align: center; border-radius: 10px; }
+
+.form h2 { color: #6c6c6c; margin-bottom: 10px; }
+
+.form p { color: #6c6c6c; margin: 5px auto 15px; font-style: italic; font-weight: 600; font-size: 1rem; }
+
+.form .btn-primary { background-color: #f9000a; border: none; border-radius: 5px; font-size: 1rem; color: #FFF; font-weight: 700; padding: 0.5rem; box-sizing: border-box; margin: 10px auto; width: 90%; letter-spacing: 1px; }
+
+.form .controls .error { display: block; font-size: 0.7rem; font-weight: 300; font-style: italic; color: #f9000a; }
+
+.form .control-label { display: none; }
+
+.form .input-xs { width: calc(100% - 40px); padding: 5px; margin: 5px 20px; letter-spacing: 0.1rem; box-sizing: border-box; }
+
+.form .terms { color: #333; font-size: 9px; padding: 5px 0; text-align: center; }
+
+.form .disclaimer { background-color: #AAA; font-size: 11px; width: 100%; padding: 5px 0; position: absolute; bottom: 0; }
+
+/*# sourceMappingURL=/static/landings/spicylatino/style.css.map */

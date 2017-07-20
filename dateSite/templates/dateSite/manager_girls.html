@@ -1,0 +1,28 @@
+{% extends './public_base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load extra_filters %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/manager_girls.scss' %}">
+{% endblock %}
+
+{% block contentinit %}
+{% endblock %}
+{% block content %}
+<div class="subpage">
+    <section class="container-home">
+        {% if manager_girls == "NO"%}
+        Datos incorrectos!
+        {% else %}
+        HOLA {{manager_girls}}
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+{% block contentend %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

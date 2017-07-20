@@ -1,0 +1,45 @@
+{% extends "./public_base.html" %}
+{% load i18n %}
+{% load static from staticfiles %}
+
+{% block head_title %}{% trans "Terms & Conditions" %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid subpage">
+    <div class="container">
+        <div class="row">
+            <h1>Terms & Conditions</h1>
+        </div>
+        <div class="row">
+            <p>
+                This website (the “Website”) is operated by Techabyte Inc,
+                (“ Techabyte”). The Terms of Use set forth below are binding on
+                all users of this Website. By directing your browser to this
+                Website or otherwise accessing the pages of this Website, you
+                accept these Terms of Use.  Techabyte may change the Terms of
+                Use, or may modify or discontinue the Website or services
+                offered thereon, at any time at its sole discretion.  Techabyte
+                reserves the right, at its sole discretion, to deny further or
+                continuing access to the Website to any visitor, including,
+                without limitation, any user that  Techabyte determines has
+                violated any aspect of these Terms of Use.  Techabyte reserves
+                the right, at its sole discretion, to seek and obtain any other
+                remedies available to it pursuant to any applicable laws and
+                regulations or at equity as a result of your breach of these
+                Terms of Use or any other act or omission by you that gives
+                rise to a claim by  Techabyte.
+            </p>
+        </div>
+        <div class="row">
+            <h4>Adult users only</h4>
+            <p>
+                This Website is not intended for children under 18 years of age.
+                If you are under 18, you are not authorized to use this Website
+                and will not be afforded access to any features of this Website
+                that allow for you to provide information to us or to share
+                information with other users of this Website.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<div name="mnu-window" class="win-alert" style="display:none;">
+    <div class="alert-header">
+        <img src="{% static 'dateSite/img/icons/bell-icon-gray.png' %}"/>
+        <label class="title">ALERT</label>
+        <hr />
+    </div>
+    <div class="alert-content">
+    {% if not verified or not notifications %}
+        <p class="no_alerts">No alerts to show</p>
+    {% else %}
+        <ul class="notifications-list">
+            {% for alert in notifications  %}
+            <a href="/{{alert.clicodesent}}">
+            <li class="notification {%if not alert.notread%}not-read{%endif%}" data-user="{{ alert.clicodesent.cliusername }}">
+                <div class="prof-img">
+                    {% if not alert.clicodesent.profile_picture %}
+                    <img src="{% static 'dateSite/img/default.png' %}" alt="{{ alert.clicodesent.cliusername }}" title="{{ alert.clicodesent.cliusername }}"/>
+                    {% else %}
+                    <img src="{{ alert.clicodesent.profile_picture }}" alt="{{ alert.clicodesent.cliusername }}" title="{{ alert.clicodesent.cliusername }}"/>
+                    {% endif %}
+                </div>
+                <div class="description">
+                    <span class="type">@{{ alert.ntymessage }}</span>
+                    <span class="date">{{ alert.notdate }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+    <div class="alert-footer">
+        <a href="{% url 'dateSite:alert' %}">See all</a>
+    </div>
+</div>

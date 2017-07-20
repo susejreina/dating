@@ -1,0 +1,101 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+
+
+{% block title %}Manage{% endblock %}
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'manager/css/manager.scss' %}">
+{% endblock %}
+{% block content %}
+<div class="center">
+    <ul class="profiles-list">
+    {% for member in members %}
+        <li>
+        {% with member.client.clicodegirl.clireplychannel as active %}
+            <div class="img-frame">
+                {% if member.client.clicodegirl.profile_picture %}
+                    <img src="{{ member.client.clicodegirl.profile_picture }}" alt="{{ member.client.clicodegirl }}" class="{%if active%}grayscale{%endif%}" data-tip="tooltip" data-placement="top" title="{%if active%}Login by {{member.log.clicodemanager}}{%else%}Offline{%endif%}" data-toggle="modal" data-target="#modal" data-client="{{ member.client.clicodegirl }}" data-online="{%if active%}true{%endif%}" data-onlineby="{%if active%}{{member.log.clicodemanager}}{%endif%}"/>
+                {% else %}
+                    <img src="{% static 'dateSite/img/default_profile.png' %}" alt="{{ member.client.clicodegirl }}" data-toggle="modal" data-target="#modal" data-client="{{ member.client.clicodegirl }}"/>
+                {% endif %}
+            </div>
+            <a data-toggle="modal" data-target="#modal" data-client="{{ member.client.clicodegirl }}" data-online="{%if active%}true{%endif%}" data-onlineby="{%if active%}{{member.log.clicodemanager}}{%endif%}">{{ member.client.clicodegirl }}</a>
+        {% endwith %}
+        </li>
+    {% endfor %}
+    </ul>
+ </div>
+
+ <!-- Modal -->
+ <div id="modal" class="modal fade" tabindex="-1" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <label class="modal-title"></label>
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                     ×
+                 </button>
+             </div>
+             <div class="modal-body">
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                 <button type="button" class="btn btn-primary" id="btnYes">Yes</button>
+             </div>
+         </div>
+     </div>
+ </div>
+
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{% static 'dateSite/js/tether.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/DjangoAjax.js' %}"></script>
+
+<script>
+var post_url, post_data;
+$(function () {
+    $('[data-tip="tooltip"]').tooltip()
+});
+
+$('#modal').on('show.bs.modal', function (e) {
+     var button = $(e.relatedTarget);
+     var client = button.data('client');
+     var online = button.data('online');
+     var onlineby = button.data('onlineby');
+
+     var modal = $(this)
+     if(online){
+        modal.find('.modal-body').html("@" + client + " is using by " + onlineby + ". <br/> Do you want to proced and login?");
+        post_url = "{% url 'manager:ajax_replaceconnection' %}";
+        post_data =  {
+          'client': client,
+          'manager': onlineby
+        };
+     }
+     else{
+        modal.find('.modal-body').html("Do you want connect like @" + client + "?");
+        post_url = "{% url 'manager:ajax_connect' %}";
+        post_data =  {
+          'client': client,
+        };
+     }
+});
+
+$('#btnYes').click(function(){
+    $.ajax({
+        type: "POST",
+        url: post_url,
+        data: {
+            data: JSON.stringify(post_data),
+        },
+        success: function(data)
+        {
+            window.location.href = "{% url 'dateSite:main' %}";
+        },
+    });
+});
+</script>
+{% endblock %}

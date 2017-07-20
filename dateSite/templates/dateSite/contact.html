@@ -1,0 +1,29 @@
+{% extends "./public_base.html" %}
+{% load i18n %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}{% trans "About Us" %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid subpage">
+    <div class="container">
+            <h1>Contact Us</h1>
+            {% if form %}
+                <hr>
+                <form role="form" action="" method="post" class="contact-form">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+            {% else %}
+                <div class="info-container contact-msg-sent">
+                    <h2>Thanks, {{ name }}</h2>
+                    <p>We appreciate you contacting us.</p>
+                    <p>We try to respond as soon as possible, so one of our Customer Service colleagues will get back to you within a few hours.</p>
+                    <p>Your friends at <i>DatingLatinos.com</i></p>
+                </div>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+@import "_definitions.scss";
+
+.subpage {
+    display: flex;
+}
+
+.container-home {
+    align-items: stretch;
+    height: calc(100vh - (#{$nav-bar-height} + 20px));
+}
+
+.approval {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1190px;
+    margin: 0 auto !important;
+    height:100%;
+    max-height: 100%;
+    .app-msg{
+        font-size: 2rem;
+        line-height: 2.3rem;
+        height: 2.3rem;
+        margin: 15px 0px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .containerbutton{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0px 25%;
+        margin: 15px 0px;
+        .app-button{
+            width: 100%;
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 3rem;
+            height: 3rem;
+            background-color: #189C00;
+            color: white;
+            border: 1px solid #189C00;
+            border-radius: 5px;
+        }
+    }
+    .app-content{
+        font-size: 1rem;
+        margin: 15px 0px;
+        padding: 0px 5px;
+        width: 100%;
+        box-sizing: border-box;
+        line-height: 1.3rem;
+        height: 1.3rem;
+        text-align: center;
+    }
+}

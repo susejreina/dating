@@ -1,0 +1,40 @@
+{% extends './client_base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load extra_filters %}
+{% load crispy_forms_tags %}
+
+{% block contentinit %}
+<input type="hidden" id="ids" name="ids" value="{{members.0|concat_ids}}" />
+<input type="hidden" id="pages" name="pages" value="0" />
+<input type="hidden" id="page" name="page" value="0" />
+<input type="hidden" id="show_more" name="show_more" value="{{members.1}}" />
+
+<input type="hidden" id="id_gencode" name="id_gencode" value="" />
+<input type="hidden" id="minage" name="minage" value="{{seaminage}}" />
+<input type="hidden" id="maxage" name="maxage" value="{{seamaxage}}" />
+<input type="hidden" id="coucode" name="coucode" value="{{country}}" />
+{% endblock %}
+{% block content %}
+    <div id="promotions" class="promotions">
+        <img src="{% static 'dateSite/img/free-chat-party.jpg' %}" />
+    </div>
+    <!--
+    {% for p in promotions %}
+    <div id="promotions" class="promotions">
+        <img src="{{p.paypath.url}}" />
+        <input type="hidden" name="show_promo_10" id="show_promo_10" value="{{show_promo_10}}" />
+    </div>
+    {% endfor %}
+    -->
+    <div id="members-content" class="row">
+        {% include 'dateSite/client_list.html' %}
+    </div>
+    <div class="loading" id="loading">
+        <img src="{% static 'dateSite/img/icons/loader.gif' %}" />
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{% static 'dateSite/js/client_list.js' %}"></script>
+{% endblock %}

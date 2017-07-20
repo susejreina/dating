@@ -1,0 +1,7 @@
+.collapse { overflow: hidden; }
+
+.card-header label { color: #000; vertical-align: -webkit-baseline-middle; margin-left: 5px; font-size: 17px; }
+
+.alertquantity { background-color: red; color: white; font-size: 10px; border: 1px solid red; border-radius: 50%; width: 20px; display: -webkit-inline-box; vertical-align: middle; padding: 2px 6px; }
+
+/*# sourceMappingURL=/static/manager/css/supervisor.css.map */

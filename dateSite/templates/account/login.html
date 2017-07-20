@@ -1,0 +1,210 @@
+{% extends "../dateSite/public_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src "dateSite/css/login.scss" %}">
+{% endblock %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid container-goodluck" role="main">
+    <div class="container">
+        <section id="goodluck" class="goodluck">
+            <div class="goodluckform pull-md-right">
+                <div class="search-arrow-down">
+                    <img src="{% static "dateSite/img/search-arrow-down.png" %}" alt="Close">
+                </div>
+                <form method="POST" action="{% url 'dateSite:online_members' %}">
+                    {% csrf_token %}
+                    {% crispy goodluck_form %}
+                    <button type="submit" class="btn btn-primary">GOOD LUCK!</button>
+                </form>
+            </div>
+            <div class="search-label col-xs-10 offset-xs-1">
+                SEARCH
+                <img src="{% static "dateSite/img/search-arrow-up.png" %}" class="search-arrow-up" alt="Search">
+            </div>
+            <div class="slogan">
+                <h3>START</h3>
+                <h4>YOUR JOURNEY</h4>
+                <h2>TODAY!</h2>
+            </div>
+            <div class="madeus">
+                We are an U.S.-owned & operated company
+            </div>
+        </section>
+    </div>
+</div>
+<div class="container-fluid container-joinus" role="main">
+    <div class="container">
+        <div class="row">
+            <h1 class="home-title col-xs-10 offset-xs-1 col-md-8 offset-md-2">
+                CHECK OUT OUR NEWEST PROFILES
+            </h1>
+        </div>
+        {% if client_testimonials %}
+        <div class="row hidden-sm-down">
+            <ol class="people col-md-10">
+                {% for ct in client_testimonials %}
+                        <li class="itemstestimonials">
+                            <img class="itemimage" src="{{ ct.tespicture.url }}" alt="{{ ct.tesname }}">
+                            <span class="itemname">{{ ct.tesname }}</span>
+                        </li>
+                {% endfor %}
+            </ol>
+        </div>
+        <ol class="row latest-members hidden-md-up">
+            {% for ct in client_testimonials %}
+                <li class="col-xs-6">
+                    <img class="itemimage" src="{{ ct.tespicture.url }}" alt="{{ ct.tesname }}">
+                    <span class="itemname">{{ ct.tesname }}</span>
+                    <span class="itemdetail">{{ ct.tesname }}</span>
+                    <span class="itemdetail">{{ ct.tesname }}</span>
+                    <button type="button" class="btn btn-secondary button-profile">View Profile</button>
+                </li>
+            {% endfor %}
+        </ol>
+        {% endif %}
+    </div>
+</div>
+<div class="red-line"></div>
+<div class="container-fluid container-verified" role="main">
+    <div class="container">
+        <div class="row">
+            <h1>BECOME A VERIFIED MEMBER</h1>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 textmediumwhy">
+                You will be able to attract more quality matches. It helps keep this community safe from scammers.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span class="titlewhy">It's easy as 1-2-3... It's FREE!</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="number"><div>1</div></div>
+                <div class="title">Email us</div>
+                <div class="image"><img src="{% static 'dateSite/img/verified_01.png' %}" alt="Email us" title="Email us" /></div>
+                <div class="textmedium">Email us a request at <br />members@datinglatinos.com</div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="number">2</div>
+                <div class="title">Video Conference</div>
+                <div class="image"><img src="{% static 'dateSite/img/verified_02.png' %}" alt="We contact you" title="We contact you" /></div>
+                <div class="textmedium">We'll do a video conference call with Zoom (zoom.us)</div>
+                <ol class="lista">
+                    <li>We will verify that your pictures on your profile are accurate.</li>
+                    <li>We will need to look at your government issued ID thru the video conference call.</li>
+                </ol>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="number">3</div>
+                <div class="title">Become Verified</div>
+                <div class="image"><img src="{% static 'dateSite/img/verified_03.png' %}" alt="Become Verified" title="Become Verified" /></div>
+                <div class="textmedium">You will earn our "green check <br />mark" on the top  corner of your<br /> profile as a Verified Member.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="red-line"></div>
+{% if love_stories %}
+<div class="container-fluid container-love" role="main">
+    <div class="container">
+        <div class="row">
+            <h1 class="home-title">LOVE STORIES</h1>
+        </div>
+        <div class="row stories-hidden hidden-xs-up">
+        {% for ls in love_stories %}
+        <div class="love-elements">
+            <img class="itemimage" src="{{ ls.tespicture.url }}" alt="{{ ls.tesname }}">
+            <p class="itemcomment">
+                {{ ls.tescomment }}
+                <span class="itemname">{{ ls.tesname }}</span>
+            </p>
+        </div>
+        {% endfor %}
+        </div>
+        <div class="row stories">
+        {% for ls in love_stories %}
+        <div class="col-xs-12 col-md-4 itemslove">
+            <img class="itemimage" src="{{ ls.tespicture.url }}" alt="{{ ls.tesname }}">
+            <p class="itemcomment">
+                {{ ls.tescomment }}
+                <span class="itemname">{{ ls.tesname }}</span>
+            </p>
+        </div>
+        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-xs-12 items-circles hidden-md-up">
+                {% for ls in love_stories %}
+                <div class="circle"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="red-line"></div>
+<div class="container-fluid container-certificate hidden-sm-down" role="main">
+    <div class="container">
+        <div class="row">
+            <h1 class="home-title">SECURE CERTIFICATE</h1>
+        </div>
+        <div class="row">
+            <p class="textcertificate col-xs-12">
+                DatingLatinos has high-security levels according to Professional
+                software development, we care about your security and we want
+                to offer you the best online dating experience.
+            </p>
+            <p class="textcertificate col-xs-12">
+                We care about your privacy and personal data, we use several
+                secure certificates because there's not extra security measures
+                that we can't take.
+            </p>
+            <p class="textcertificatebold col-xs-12">
+                We want you to feel secure and protected.
+            </p>
+        </div>
+        <ol class="row list-certificate">
+            <li class="col-xs-6 col-md-3"><img src="{% static "dateSite/img/logo_secure.png" %}" alt="" class="itemimagecertificate"></li>
+            <li class="col-xs-6 col-md-3"><img src="{% static "dateSite/img/logo_symantec.png" %}" alt="" class="itemimagecertificate"></li>
+            <li class="col-xs-6 col-md-3"><img src="{% static "dateSite/img/logo_ssl-secure.png" %}" alt="" class="itemimagecertificate"></li>
+            <li class="col-xs-6 col-md-3"><img src="{% static "dateSite/img/logo_ssl.png" %}" alt="" class="itemimagecertificate"></li>
+    </ol>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{% static 'dateSite/js/login.js' %}"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98407592-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- Google Code for Remarketing Tag -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 855907826;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/855907826/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+{% endblock %}

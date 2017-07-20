@@ -1,0 +1,34 @@
+@charset "UTF-8";
+.profiles-list { list-style: none; padding: 0; text-align: center; }
+
+.profiles-list li { display: inline-block; }
+
+.profiles-list li .img-frame { width: 150px; height: 150px; padding: 0; -moz-border-radius: 10px; -webkit-border-radius: 10px; border: 5px solid #bde4ff; font: 13px normal Arial, Helvetica, sans-serif; line-height: 18px; margin: 5px 10px; overflow: hidden; }
+
+.profiles-list li .img-frame img { min-height: 100%; min-width: 100%; width: auto; height: auto; max-width: none; max-height: 100%; display: block; position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); cursor: pointer; }
+
+.grayscale { filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */ }
+
+.manager-choice { width: 50%; min-width: 350px; margin: 0 auto; }
+
+.manager-choice h4 { text-align: left; }
+
+.manager-choice .radio-btn { margin-top: 25px; text-align: left; padding-left: 20px; line-height: 35px; font-size: 18px; letter-spacing: 1.5px; }
+
+.manager-choice .radio-btn .option-input { -webkit-appearance: none; -ms-appearance: none; -o-appearance: none; appearance: none; position: relative; top: 5px; right: 0; bottom: 0; left: 0; height: 20px; width: 20px; background: #cbd1d8; border: none; color: #fff; cursor: pointer; display: inline-block; margin-right: 0; outline: none; position: relative; z-index: 1000; border-radius: 50%; }
+
+.manager-choice .radio-btn .option-input:hover { background: #9faab7; }
+
+.manager-choice .radio-btn .option-input:checked { background: #f9000a; }
+
+.manager-choice .radio-btn .option-input:checked::before { height: 20px; width: 20px; position: absolute; content: '✔'; display: inline-block; font-size: 14.66667px; text-align: center; line-height: 20px; }
+
+.manager-choice .radio-btn .option-input:checked::after { background: #40e0d0; content: ''; display: block; position: relative; z-index: 100; }
+
+.manager-choice .radio-btn .option-input.radio { border-radius: 50%; }
+
+.manager-choice .radio-btn .option-input.radio::after { border-radius: 50%; }
+
+.manager-choice .btn-primary { margin: 20px auto; }
+
+/*# sourceMappingURL=/static/manager/css/manager.css.map */

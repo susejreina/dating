@@ -1,0 +1,133 @@
+{% load static from staticfiles %}
+{% load extra_filters %}
+
+<div id="chat-list" class="chatList">
+    <h2 class="title-chat title-mychats">MY CHATS</h2>
+    <div class="chat-mychat">
+        <ul class="clientsmychat clientchatlist">
+        {% for cli in mychats %}
+            {% if client.clicode != cli.sentcode %}
+                <li id="client_{{ cli.sentcode }}" data-username="{{ cli.sentusername }}">
+                    <div class="block-identity">
+                        <div class="chat-img-container">
+                            {% if cli.sentprofilepicture %}
+                            <img class="itemimage" src="{{ cli.sentprofilepicture }}" alt="{{ cli.sentusername }}" title="{{ cli.sentusername }}" />
+                            {% else %}
+                            <img class="itemimage" src="{% static 'dateSite/img/default.png' %}" alt="{{ cli.sentusername }}" title="{{ cli.sentusername }}"/>
+                            {% endif %}
+                        </div>
+                        {% if cli.msg_qty != 0 %}
+                            {% if cli.msg_qty <= 9 %}
+                                <div class="itemquantity">{{ cli.msg_qty }}</div>
+                            {% else %}
+                                <div class="itemquantity">+9</div>
+                            {% endif %}
+                        {% else %}
+                            <div class="itemquantity" style="display: none;">{{ cli.msg_qty }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="block-message">
+                        {% if cli.sentage > 0 %}
+                        <span class="itemname">@{{ cli.sentusername }}, {{ cli.sentage }}</span>
+                        {% else %}
+                        <span class="itemname">+{{ cli.sentusername }}</span>
+                        {% endif %}
+                        <p class="itemmessage">{{ cli.mescontent | safe }}</p>
+                    </div>
+                </li>
+            {% else %}
+                <li id="client_{{ cli.recievedcode }}" data-username="{{ cli.recievedusername }}">
+                    <div class="block-identity">
+                        <div class="chat-img-container">
+                            {% if cli.recievedprofilepicture %}
+                            <img class="itemimage" src="{{ cli.recievedprofilepicture }}" alt="{{ cli.recievedusername }}" title="{{ cli.recievedusername }}" />
+                            {% else %}
+                            <img class="itemimage" src="{% static 'dateSite/img/default.png' %}" alt="{{ cli.recievedusername }}" title="{{ cli.recievedusername }}" />
+                            {% endif %}
+                        </div>
+                        {% if cli.msg_qty != 0 %}
+                            {% if cli.msg_qty <= 9 %}
+                                <div class="itemquantity">{{ cli.msg_qty }}</div>
+                            {% else %}
+                                <div class="itemquantity">+9</div>
+                            {% endif %}
+                        {% else %}
+                            <div class="itemquantity" style="display: none;">{{ cli.msg_qty }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="block-message">
+                        {% if cli.recievedage > 0 %}
+                        <span class="itemname">@{{ cli.recievedusername }}, {{ cli.recievedage }}</span>
+                        {% else %}
+                        <span class="itemname">@{{ cli.recievedusername }}</span>
+                        {% endif %}
+                        <p class="itemmessage">{{ cli.mescontent | safe }}</p>
+                    </div>
+                </li>
+            {% endif %}
+        {% empty %}
+            <li class="notchatlist">&nbsp;</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <h2 class="title-chat title-myrequest">CHAT REQUEST</h2>
+    <div class="chat-myrequest">
+        <ul class="clientsrequest clientchatlist">
+            {% for cli in myrequest %}
+            <li id="client_{{ cli.sentcode }}" data-username="{{ cli.sentusername }}">
+                <div class="block-identity">
+                    <div class="chat-img-container">
+                        {% if cli.sentprofilepicture %}
+                            <img class="itemimage" src="{{ cli.sentprofilepicture }}" alt="{{ cli.sentusername }}" title="{{ cli.sentusername }}" />
+                            {% else %}
+                            <img class="itemimage" src="{% static 'dateSite/img/default.png' %}" alt="{{ cli.sentusername }}" title="{{ cli.sentusername }}" />
+                            {% endif %}
+                    </div>
+                    {% if cli.msg_qty != 0 %}
+                        {% if cli.msg_qty <= 9 %}
+                            <div class="itemquantity">{{ cli.msg_qty }}</div>
+                        {% else %}
+                            <div class="itemquantity">+9</div>
+                        {% endif %}
+                    {% else %}
+                        <div class="itemquantity" style="display: none;">{{ cli.msg_qty }}</div>
+                    {% endif %}
+                </div>
+                <div class="block-message">
+                    {% if cli.sentage > 0 %}
+                    <span class="itemname">@{{ cli.sentusername }}, {{ cli.sentage }}</span>
+                    {% else %}
+                    <span class="itemname">@{{ cli.sentusername }}</span>
+                    {% endif %}
+                    <p class="itemmessage">{{ cli.mescontent | safe }}</p>
+                </div>
+            </li>
+            {% empty %}
+                {% for cli in mysuggestions %}
+                <li id="client_{{ cli.clicode }}" data-username="{{ cli.cliusername }}">
+                    <div class="block-identity">
+                        <div class="chat-img-container">
+                            {% if cli.profile_picture %}
+                    <img class="itemimage" src="{{ cli.profile_picture }}" alt="{{ cli.cliusername }}" title="{{ cli.cliusername }}" /> {% else %}
+                    <img class="itemimage" src="{% static 'dateSite/img/default.png' %}" alt="{{ cli.cliusername }}" title="{{ cli.cliusername }}" /> {% endif %}
+                        </div>
+                    </div>
+                    <div class="block-message-suggestions">
+                        {% if cli.age != 0 %}
+                            {% if member.cliusername|length < 12 %}
+                            <span class="itemname">@{{ cli.cliusername }}, {{ cli.age }}</span>
+                            {% else %}
+                            <span class="itemname">@{{ cli.cliusername|truncatechars:16 }}...</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="itemname">@{{ cli.cliusername }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="chat_request_now">CHAT NOW</div>
+                </li>
+                {% empty %}
+                <li class="notchatlist">&nbsp;</li>
+    {% endfor %} {% endfor %}
+        </ul>
+    </div>
+</div>

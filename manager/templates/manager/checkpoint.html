@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+{% load static from staticfiles %}
+{% block title %}Login{% endblock %}
+{% load sass_tags %}
+
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'manager/css/manager.scss' %}">
+{% endblock %}
+{% block content %}
+<div class="center">
+    <div class="form-container">
+        <h4>Login @{{user}} as:</h4>
+        <hr>
+        <form class="manager-choice" method="POST">
+        {% csrf_token %}
+        <div class="radio-btn">
+            {% for manager in managers %}
+                <input type="radio" name="manager" class="option-input checkbox" value="{{manager.clicodemanager.clicode}}" required />
+                <span>{{manager.clicodemanager.cliusername}}</span><br />
+            {% endfor %}
+        </div>
+        <input type="submit" class="btn btn-primary" value="Login"/>
+        </form>
+    </div>
+</div>
+{% endblock %}

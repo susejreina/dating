@@ -1,0 +1,26 @@
+{% extends './client_base.html' %}
+{% load static from staticfiles %}
+{% load extra_filters %}
+{% load sass_tags %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/approval.scss' %}">
+{% endblock %}
+
+{% block content %}
+<div class="approval row">
+    {% if approval.msg %}
+    <div class="col-xs-12 app-content">{{ approval.msg }}</div>
+    <div class="col-xs-12 app-content">{{ approval.ip }}</div>
+    {% else %}
+    <div class="col-xs-12 app-msg">Payment Successful</div>
+    <div class="col-xs-12 containerbutton"><a href="{% url 'dateSite:main' %}" class="app-button">START TO ENJOY</a></div>
+    <div class="col-xs-12 app-content">You bought {{ approval.credits }} credits for USD{{approval.price}}</div>
+    <div class="col-xs-12 app-content">{{ approval.ip }}</div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

@@ -1,0 +1,99 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="Dating site, online dating, free dating sites, online dating sites">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DatingLatinos.com</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'dateSite/img/favicon.ico' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/login.scss' %}">
+        <script type="text/javascript" src="{% static 'dateSite/js/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dateSite/js/tether.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dateSite/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dateSite/js/jquery.form.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dateSite/js/DjangoAjax.js' %}"></script>
+        {% block linkcss %}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-header logo-img">
+                    {% if not user.is_authenticated %}
+                    <button class="navbar-toggler hidden-lg-up pull-xs-right btn-padlock" data-toggle="collapse" data-target="#secLogin">
+                        <img src="{% static "dateSite/img/signin.png" %}" alt="Login" />
+                    </button>
+                    {% endif %}
+                    <a href="{% url 'dateSite:login' %}">
+                        <div class="navbar-brand">
+                        </div>
+                    </a>
+                </div>
+                {% if not user.is_authenticated %}
+                    <div id="secLogin" class="collapse navbar-toggleable-md" role="search">
+                        <span></span>
+                        <div class="secLogin">
+                            <form class="form-inline pull-md-right clear-md-down" autocomplete="new-password" method="POST" action="{% url 'account_login' %}">
+                                <div class="form-label">
+                                    {% blocktrans %}
+                                    If you have not created an account yet, then please
+                                    {% endblocktrans %}
+                                    <a href="{% url 'account_signup' %}">sign up</a> first.
+                                </div>
+                                {% csrf_token %}
+                                {% crispy login_form %}
+                                {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+                {% block contentinit %}
+                {% endblock %}
+                {% block content %}
+                {% endblock %}
+                {% block contentend %}
+                {% endblock %}
+                <input type="hidden" value="{% static '' %}" id="s3" name="s3" />
+                <input type="hidden" value="{{MEDIA_URL}}" id="s3_root" name="s3_root" />
+        <footer>
+            <div class="container-fluid">
+                <div class="container">
+                    <div class="row">
+                        <nav class="col-xs-12">
+                            <ol>
+                                <li><a href="{% url 'dateSite:about' %}">About Us</a></li>
+                                <li><a href="{% url 'dateSite:securely' %}">Dating Securely</a></li>
+                                <li><a href="{% url 'dateSite:verified' %}">Verified Member</a></li>
+                                <li><a href="{% url 'dateSite:faq' %}">FAQ</a></li>
+                                <li><a href="{% url 'dateSite:contact' %}">Contact Us</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid copyrigth">
+                <div class="container">
+                    <div class="row" role="contentinfo">
+                    <span> Copyright DatingLatinos.com. All rights reserved.</span>
+                    <span>
+                    <a href="{% url 'dateSite:terms' %}">Terms & Conditions</a> |
+                    <a href="{% url 'dateSite:policy' %}">Privacy Policy</a>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        {% block javascript %}
+        {% endblock %}
+    </body>
+</html>

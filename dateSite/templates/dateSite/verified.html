@@ -1,0 +1,37 @@
+{% extends "./public_base.html" %}
+{% load i18n %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+
+{% block head_title %}{% trans "Verified Member" %}{% endblock %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/verified.scss' %}">
+{% endblock %}
+
+{% block content %}
+<div class="cotainer-fluid subpage">
+    <div class="container container-main-verified">
+        <div class="row">
+            <h1 class="home-title">BECOME A VERIFIED MEMBER</h1>
+        </div>
+        <div class="row">
+            <p class="textverified col-xs-12">
+                Dating Latinos is always striving to excellence and wants to offer the best online dating possible, That’s why we have certified profile process, to ensure that you are talking with real people, with real experiences and great values.
+            </p>
+            <h1 class="home-subtitle">THE BENEFITS OF HAVE A CERTIFIED PROFILE</h1>
+            <ol class="ol-verified">
+                <li>50% more chances of being selected or start a chat.</li>
+                <li>More reliable profile means more active dates. </li>
+                <li>Generate more trust.</li>
+                <li>Avoid double profile users.</li>
+                <li>Anti Scam security.</li>
+                <li>It´s Free and easy to obtain.</li>
+            </ol>
+        </div>
+        <div class="row">
+            <p class="textverified">Get your profile verified in this <a href="{% url 'dateSite:verified' %}">link</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

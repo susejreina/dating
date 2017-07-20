@@ -1,0 +1,25 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load extra_filters %}
+
+<input type="hidden" id="ids" name="ids" value="{{members.0|concat_ids}}" />
+<input type="hidden" id="show_more" name="show_more" value="{{members.1}}" />
+<input type="hidden" id="id_seaminage" name="minage" value="{{seaminage}}" />
+<input type="hidden" id="id_seamaxage" name="maxage" value="{{seamaxage}}" />
+<input type="hidden" id="id_gencode" name="id_gencode" value="" />
+<input type="hidden" id="id_seacountry" name="coucode" value="{{country}}" />
+
+<div name="mnu-window" class="win-search" style="display:none;">
+    <div class="search-header">
+        <img src="{% static 'dateSite/img/icons/search-icon-gray.png' %}" />
+        <label class="title">SEARCH</label>
+        <hr />
+    </div>
+    <form id="search" method="post" action="{% url 'dateSite:main' %}" class="search-content">
+        {% csrf_token %}
+        {% crispy search_form %}
+        <input type="submit" class="search-btn btn btn-primary btn-xs" value="SEARCH" />
+    </form>
+</div>

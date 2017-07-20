@@ -1,0 +1,78 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="Dating site, online dating, free dating sites, online dating sites">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DatingLatinos.com</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'dateSite/img/favicon.ico' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/base.scss' %}">
+        <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/mnu.scss' %}">
+        <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/chat_list.scss' %}">
+        {% block linkcss %}
+        {% endblock %}
+        <script type="text/javascript" src="{% static 'dateSite/js/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dateSite/js/jquery.form.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dateSite/js/DjangoAjax.js' %}"></script>
+    </head>
+</head>
+<body>
+    <div class="main-block">
+        <main>
+            <section class="back-mnu">
+                {% include "./mnu.html" %}
+            </section>
+            <section class="content {%if member.clicode and user.pk != member.clicode%}chat-open{%endif%}">
+                {% block content %}
+                {% endblock %}
+            </section>
+            {% if member.clicode and user.pk != member.clicode %}
+                <section class="chat-form">
+                {% include './chat_form.html' %}
+                </section>
+            {% endif %}
+            <section class="chat">
+                {% include "./chat_list.html" %}
+            </section>
+        </main>
+    </div>
+    <input type="hidden" value="{% static '' %}" id="s3" name="s3" />
+    <input type="hidden" value="{{ MEDIA_URL }}" id="s3_root" name="s3_root" />
+    <input type="hidden" value="{{ is_client }}" id="is_client" name="is_client" />
+    <input type="hidden" value="{{quantity_ntf}}" id="alert" name="alert" />
+    <input type="hidden" value="{{ verified }}" id="verified" name="verified" />
+    <input type="hidden" value="{{ client.clicode }}" id="sender" name="sender" />
+    <input class="chat-messages" type="hidden">
+</body>
+
+<div class="layer" style="display:none;">
+    <div class="layer-main">
+        <div class="layer-header">
+            <span class="head-title"></span>
+            <span class="head-close">X</span>
+        </div>
+        <div class="layer-content">
+            <p class="cont-title"></p>
+            <p class="cont-content"></p>
+        </div>
+        <div class="layer-footer">
+            <input type="button" class="foo-btn-ok" name="layer-ok" value="OK" />
+            <input type="button" class="foo-btn-close" name="layer-close" value="CLOSE" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'dateSite/js/base.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/reconnecting-websocket.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/mnu.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/chat_list.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/socket_notifications.js' %}"></script>
+{% block scripts %}
+{% endblock %}
+</html>

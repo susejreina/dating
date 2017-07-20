@@ -1,0 +1,60 @@
+{% load static from staticfiles %}
+{% load extra_filters %}
+
+<header>
+    <div class="logo"></div>
+    <ul class="mnu">
+        <li class="mnu-search">
+            <div class="mnu-text">Search</div>
+            <div class="back-icon">
+                <div class="mnu-icon"></div>
+            </div>
+        </li>
+        <li class="mnu-feel">
+            <div class="mnu-text">I Feel</div>
+            <div class="back-icon">
+                <div class="img-icon">
+                    <img id='feel-icon' src="{% static 'dateSite/img/icons/' %}{{ feel }}"/>
+                </div>
+            </div>
+        </li>
+        <li class="mnu-alert">
+            <div class="mnu-text">Alerts</div>
+            <div class="back-icon">
+                <div class="mnu-icon"></div>
+                {% if quantity_ntf == 0 %}
+                <div id="alertsquantity" class="badget" style="display: none;">{{quantity_ntf}}</div>
+                {% elif quantity_ntf < 10 %}
+                <div id="alertsquantity" class="badget">{{quantity_ntf}}</div>
+                {% else %}
+                <div id="alertsquantity" class="badget">+9</div>
+                {% endif %}
+            </div>
+        </li>
+        <a href="{% url 'dateSite:myinbox' %}">
+            <li class="mnu-inbox">
+                <div class="mnu-text">Inbox</div>
+                <div class="back-icon">
+                    <div class="mnu-icon"></div>
+                </div>
+            </li>
+        </a>
+        <li class="mnu-profile">
+            <div class="mnu-text">Profile</div>
+            {% if profile_picture %}
+            <div class="back-icon">
+                <img src="{{ profile_picture }}" alt="@{{ username }}" title="@{{ username }}"/>
+            </div>
+            {% else %}
+            <div class="back-icon">
+                <div class="mnu-icon"></div>
+            </div>
+            {% endif %}
+        </li>
+    </ul>
+</header>
+
+{% include "./navbar/search_form_home.html" %}
+{% include "./navbar/feeling_form_home.html" %}
+{% include "./navbar/alerts_menu_home.html" %}
+{% include "./navbar/profile_menu_home.html" %}

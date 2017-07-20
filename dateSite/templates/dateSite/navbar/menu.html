@@ -1,0 +1,125 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/menu.scss' %}">
+{% endblock %}
+
+<div class="btn-group" id="search-btn-group">
+    <button id="menu-search" type="button" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        <span class="button-icon span-search">
+            <span>Search</span>
+            <div class="img-icon">
+                <img src="{% static 'dateSite/img/icons/search-icon.png' %}" />
+            </div>
+        </span>
+    </button>
+    <div class="dropdown-menu dropdown-search-menu">
+        <div class="search bubble-search">
+            {% include "./search_form.html" %}
+        </div>
+    </div>
+</div>
+<div class="btn-group">
+    <button id="menu-feelings" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="button-icon">
+            <span>I Feel</span>
+            <div class="img-icon">
+                <img id='feel-icon' />
+            </div>
+        </span>
+    </button>
+    <div class="dropdown-menu">
+        <div class="bubble-feeling feelings">
+            {% include "./feeling_form.html" %}
+        </div>
+    </div>
+</div>
+<div class="btn-group">
+    <button id="menu-alerts" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="button-icon alertbutton">
+            <span>Alerts</span>
+            <div class="img-icon">
+                <img src="{% static 'dateSite/img/icons/bell-icon.png' %}" />
+            </div>
+            <div id="alertsquantity" class="alertsquantity">{{ quantity_ntf }}</div>
+        </span>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+        <div class="alerts bubble-alerts">
+            {% include "./alerts_menu.html" %}
+        </div>
+    </div>
+</div>
+<div class="btn-group">
+    <button id="menu-profile" type="button" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+        <span class="button-icon span-profile">
+            <span>Profile</span>
+            <div class="img-icon profile-picture">
+            {% if profile_picture %}
+                <img src="{{ profile_picture }}" id="menu-profile-pic" alt="@{{ username }}" title="@{{ username }}"/>
+            {% else %}
+                <img src="{% static 'dateSite/img/icons/profile.png' %}" alt="@{{ username }}" title="@{{ username }}" />
+            {% endif %}
+            </div>
+        </span>
+    </button>
+    <div class="dropdown-menu dropdown-menu-right dropdown-profile-menu">
+        <div class="profile-menu bubble-profile dropdown-menu-profile">
+            {% include "./profile_menu.html" %}
+        </div>
+    </div>
+</div>
+
+<div id="modal-search" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body search">
+                {% include "./search_form.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-feelings" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body feelings">
+                {% include "./feeling_form.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-alerts" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body alerts">
+                {% include "./alerts_menu.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-profile" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body profile-menu">
+                {% include "./profile_menu.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+{% block javascript %}
+<script type="text/javascript" src="{% static 'dateSite/js/menu.js' %}"></script>
+<script type="text/javascript" src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
+<script type="text/javascript" src="{% static 'file_form/file_form.js' %}"></script>
+{% endblock %}

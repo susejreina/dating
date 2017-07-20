@@ -1,0 +1,17 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<div class="row search-header">
+    <div class="col-xs-2 col-sm-4">
+        <img src="{% static 'dateSite/img/icons/search-icon.png' %}" class="icon"/>
+        <label class="title hidden-sm-down">SEARCH</label>
+    </div>
+    <div class="col-xs-10 col-sm-8"><div class="vr"></div></div>
+</div>
+<form id="search" method="post" action="{% url 'dateSite:main' %}">
+    {% csrf_token %}
+    {% crispy search_form %}
+    <input type="submit" class="search-btn btn btn-primary btn-xs" value="search" />
+</form>

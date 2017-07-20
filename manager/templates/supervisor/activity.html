@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+
+{% block title %}Activity Panel{% endblock %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% sass_src 'manager/css/supervisor.scss' %}">
+{% endblock %}
+
+{% block content %}
+<div id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <div class="alertquantity">{{chat|length}}</div><label> Chats </label>
+            </a>
+        </div>
+        <div id="collapseOne" class="collapse show in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-block">
+                <ul>
+                {% for message in chat %}
+                    <li>@{{ message.clicodesent.cliusername }} wants to chat with @{{ message.clicoderecieved.cliusername }} &lt;{{ message.clicoderecieved.cliemail }}&gt;</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <div class="alertquantity">{{inbox|length}}</div><label> Inbox </label>
+            </a>
+        </div>
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="card-block">
+                <ul>
+                {% for message in inbox %}
+                    <li>@{{ message.clicodesent }} to @{{ message.clicoderecieved }} &lt;{{ message.clicoderecieved.cliemail }}&gt;</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'dateSite/js/tether.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/bootstrap.min.js' %}"></script>
+{% endblock %}

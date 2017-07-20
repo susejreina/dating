@@ -1,0 +1,69 @@
+{% extends './public_base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load extra_filters %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/signup.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/online.scss' %}">
+    <style>footer{ display: none; }</style>
+{% endblock %}
+
+{% block contentinit %}
+    <input type="hidden" id="ids" name="ids" value="{{members.0|concat_ids}}" />
+    <input type="hidden" id="pages" name="pages" value="0" />
+    <input type="hidden" id="page" name="page" value="0" />
+    <input type="hidden" id="show_more" name="show_more" value="{{members.1}}" />
+
+    <input type="hidden" id="id_seaminage" name="id_seaminage" value="{{seaminage}}" />
+    <input type="hidden" id="id_seamaxage" name="id_seamaxage" value="{{seamaxage}}" />
+    <input type="hidden" id="id_gencode" name="id_gencode" value="{{gencode}}" />
+    <input type="hidden" id="id_seacountry" name="id_seacountry" value="" />
+{% endblock %}
+{% block content %}
+<div class="subpage">
+    <section class="container-home">
+        <div class="row">
+            <div class="container membersContainer online-members row" id="membersContainer">
+                <div id="members-content" class="row">
+                    {% include 'dateSite/client_list.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="signupModal" class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="signupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="signup">
+                    <h1>Sign Up</h1>
+                    <p>Already have an account? Then please <a href="{% url 'dateSite:login' %}">log in</a>.</p>
+                    <form id="signup_form" method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        {% crispy signup_form %}
+                        {% crispy goodluck_form %}
+                        <input type="submit" class="btn-primary btn-sm" value="sign up" id="signup-submit"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block contentend %}
+<div class="loading" id="loading">
+    <img src="{% static 'dateSite/img/icons/loader.gif' %}" />
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'dateSite/js/client_list.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/public.js' %}"></script>
+{% endblock %}

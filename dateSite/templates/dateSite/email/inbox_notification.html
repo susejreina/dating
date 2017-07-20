@@ -1,0 +1,26 @@
+{% load static from staticfiles %}
+<html>
+<body style="text-align: left; height:100%; font-family:verdana; line-height: 2em; padding: 15px; color: #000 !important;">
+    <br />
+    <img src="https://datinglatinoss3.s3.amazonaws.com/static/dateSite/img/logo.png" style="width:45%; margin:10px"/>
+    <div style="height:3px; border:0; background-color:#b00e12;"></div>
+    <div style="text-align: center;">
+        <p style="width:100%;">Dear <b>@{{ client_recieved }}</b>, <b>@{{ client_sender }}</b> sent you a new inbox message </p>
+        <div style="width:auto; height: 230px; display: flex; justify-content: center; background-color: #f5f5f5; padding: 25px 0;">
+            <div style="align-self: center; vertical-align: middle; width:200px; height:200px; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+                <img src="https://datinglatinoss3.s3.amazonaws.com{{ client_img }}" style="max-width: 100%; margin:10px"/>
+            </div>
+            <div style="padding: 40px 20px; align-self: center; vertical-align: middle;">
+                <p>Subject: <b>{{ inbox_title }}</b></p>
+                <a href="https://www.{{ current_site }}/myinbox" style="text-decoration: none; padding: 10px 15px; background-color:#9ACD32; border: 0px; font-size: 0.9em; font-weight: bold; color: #FFF; margin:20px auto;">
+                    Read Inbox
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div style="font-size: 10px; line-height: 1rem; text-align: center;">
+        Please ignore this message if you have not registered on our site.
+    </div>
+</body>
+</html>

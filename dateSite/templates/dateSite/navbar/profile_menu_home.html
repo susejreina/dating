@@ -1,0 +1,82 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+
+<div name="mnu-window" class="win-profile" style="display:none;">
+    <div class="profile-header">
+        <img src="{% static 'dateSite/img/icons/edit.png' %}"/>
+        <label class="title">PROFILE</label>
+        <hr />
+    </div>
+    <div class="profile-area">
+        {% if verified %}
+            <div id="profile-pic-container" class="profile-pic-container">
+                <a href="{% url 'dateSite:profile' slug=user.username %}">
+                {% if profile_picture %}
+                    <img id="dropmenu-profile-pic" src="{{ profile_picture }}" class="img-thumb" alt="@{{ username }}" title="@{{ username }}"/>
+                {% else %}
+                    <img src="{% static 'dateSite/img/default.png' %}" class="img-thumb" alt="@{{ username }}" title="@{{ username }}"/>
+                {% endif %}
+                </a>
+                <div class="save-img"></div>
+                <form id="update-profile-menu" class="edit" method="POST" enctype="multipart/form-data" title="Update my profile picture">
+                    {% csrf_token %} {{ upload_profile_menu }}
+                </form>
+                    {% include 'dateSite/upload_template.html' %}
+            </div>
+            <div class="basic-info">
+                <label class="center">
+                    <a href="{% url 'dateSite:profile' slug=user.username %}">
+                        <b>@{{ username }}</b>
+                    </a><br/>
+                    {% if name %}
+                    <b>{{ name }}</b>
+                    {% endif %}
+                </label>
+                {% if city %}
+                <label>
+                    <img src="{% static 'dateSite/img/icons/location.png' %}" class="small-icon" /> <i>{{ city }}</i>
+                </label>
+                {% endif %}
+                {% if marital_status %}
+                <label>
+                    <img src="{% static 'dateSite/img/icons/status-icon.png' %}" class="small-icon" />
+                    {{ marital_status }}
+                </label>
+                {% endif %}
+                {% if height %}
+                    <label><img src="{% static 'dateSite/img/icons/height-icon.png' %}" class="small-icon" />{{ height }}</label>
+                {% endif %}
+            </div>
+            <a href="{% url 'dateSite:edit_profile' slug=user.username %}" title="Edit my profile" data-toggle="tooltip" class="edit">
+                <img src="{% static 'dateSite/img/icons/edit-gray.png' %}" class="edit-icon" title="Edit my profile" data-toggle="tooltip"/>
+            </a>
+        {% else %}
+            <div class="profile-pic-container">
+                <img src="{% static 'dateSite/img/default_profile.png' %}" class="img-thumb"/>
+            </div>
+            <div class="basic-info not-verified">
+                <b>@{{ user }}</b>
+            </div>
+        {% endif %}
+    </div>
+    {% if verified %}
+        <ul class="action-area">
+            <li>
+                {% if premium_member %}
+                <div class="opt-premium"></div>
+                <span class="option">PREMIUM MEMBER</span>
+                {% else %}
+                <a href="https://api.ccbill.com/wap-frontflex/flexforms/f34c27b0-2f5d-4a13-b382-2e04ba89f104?client={{username}}" class="upgradePremiumModal" target="_blank"><div class="opt-upgrade"></div></a>
+                <span class="option">UPGRADE TO PREMIUM</span>
+                {% endif %}
+            </li>
+        </ul>
+    {% endif %}
+    <div class="logout-area">
+        <form method="post" action="{% url 'account_logout' %}" id="profile">
+            {% csrf_token %}
+            <button class="btn btn-outline btn-xs">Log Out</button>
+        </form>
+    </div>
+</div>

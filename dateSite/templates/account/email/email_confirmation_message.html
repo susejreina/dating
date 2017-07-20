@@ -1,0 +1,20 @@
+{% load static from staticfiles %}
+<html>
+<body style="text-align: center; height:100%; background-color:#e8e6e6; font-family:verdana; line-height: 2em; padding: 15px; color: #000 !important;">
+    <br />
+    <img src="https://datinglatinoss3.s3.amazonaws.com/static/dateSite/img/logo.png" style="width:70%; margin:10px auto"/>
+    <h2>Congratulations, @{{ user }}!</h2>
+    <p>Now you can start meeting {{ gender_preference }} from now on.</p>
+    <p>Confirm that {{ email }} is your email account and connect daily with {{ gender_preference }} compatible with you plus many more benefits.</p>
+    <p>Verify your email account now</p>
+    <a href="{{ activate_url }}" style="text-decoration:none;">
+        <button style="padding: 10px 15px; background-color:#9ACD32; border: 0px; font-size: 1.5em; font-weight: bold; color: #FFF; margin-bottom:20px;">
+            CONFIRM EMAIL
+        </button>
+    </a>
+    <br />
+    <div style="font-size: 10px; line-height: 1rem;">
+        Please ignore this message if you have not registered on our site or if you have already confirmed your email. You have chosen to receive this newsletter when you registred on {{ site }}
+    </div>
+</body>
+</html>

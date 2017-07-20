@@ -1,0 +1,22 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+
+<div class="row feel-header">
+    <div class="col-xs-2 col-sm-4">
+        <img src="{% static 'dateSite/img/icons/heart-icon.png' %}" class="icon"/>
+        <label class="title hidden-sm-down">How I Feel</label>
+    </div>
+    <div class="col-xs-10 col-sm-8"><div class="vr"></div></div>
+</div>
+<form id="feeling" method="post">
+    {{ csrf_input }}
+    {% for feeling in feeling_choices  %}
+        <button type="submit" class="btn-feel col-xs-2" id="feel{{ feeling.feecode }}" value="{{ feeling.feecode }}">
+            <img src="{% static '' %}dateSite/img/icons/{{ feeling.feeiconfile }}" />
+            {{ feeling.feedescription }}
+        </button>
+    {% endfor %}
+</form>

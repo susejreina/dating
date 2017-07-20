@@ -1,0 +1,21 @@
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<div name="mnu-window" class="win-feel" style="display:none;">
+    <div class="feel-header">
+        <img src="{% static 'dateSite/img/icons/heart-icon-gray.png' %}"/>
+        <label class="title">HOW I FEEL</label>
+        <hr />
+    </div>
+    {{ csrf_input }}
+    <ul class="feeling-list">
+    {% for feeling in feeling_choices  %}
+        <li data-code="{{ feeling.feecode }}">
+            <img src="{% static '' %}dateSite/img/icons/{{ feeling.feeiconfile }}" />
+            <p class="description">{{ feeling.feedescription }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+</div>

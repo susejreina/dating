@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "D:/Code/WebDating/Dating/dating-test/manager/static/manager/css/supervisor.css",
+	"sources": [
+		"D:/Code/WebDating/Dating/dating-test/manager/static/manager/css/supervisor.scss"
+	],
+	"mappings": "AAAA,AAAA,SAAS,CAAA,EACL,QAAQ,EAAE,MAAO,GACpB;;AAED,AACI,YADQ,CACR,KAAK,CAAA,EACD,KAAK,EAAE,IAAK,EACZ,cAAc,EAAE,uBAAwB,EACxC,WAAW,EAAE,GAAI,EACjB,SAAS,EAAE,IAAK,GACnB;;AAEL,AAAA,cAAc,CAAA,EACV,gBAAgB,EAAE,GAAI,EACtB,KAAK,EAAE,KAAM,EACb,SAAS,EAAE,IAAK,EAChB,MAAM,EAAE,aAAc,EACtB,aAAa,EAAE,GAAI,EACnB,KAAK,EAAE,IAAK,EACZ,OAAO,EAAE,kBAAmB,EAC5B,cAAc,EAAE,MAAO,EACvB,OAAO,EAAE,OAAQ,GACpB",
+	"names": []
+}

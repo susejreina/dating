@@ -1,0 +1,86 @@
+{% load static from staticfiles %}
+<div class="chat-header">
+    <div class="chat-img-container">
+        {% if member.profile_picture %}
+            <img src="{{ member.profile_picture }}" class="chat-image" />
+        {% else %}
+            <img src="{% static 'dateSite/img/default.png' %}" class="chat-image" />
+        {% endif %}
+    </div>
+    {% if member.feecode %}
+    <div class="feeling-container">
+        <img class="chat-fell" src="{% static 'dateSite/img/icons/' %}{{member.feecode.feeiconfile}}" />
+    </div>
+    {% endif %}
+    <div class="basic-info">
+        <span class="chat-name"><b>@{{ member.cliusername }}{% if member.age %}, {{ member.age }} {% endif %}</b></span>
+        {% if member.cliname %}<span class="chat-nickname">{{ member.cliname }}</span>{% endif %}
+        {% if member.city %}<span class="chat-city">{{ member.city }}</span>{% endif %}
+    </div>
+    <img src="{% static 'dateSite/img/arrow-down.gif' %}" alt="chat options" class="chat-actions-btn">
+    <ul class="chat-actions" id="chat-actions">
+        <li class="list-item" id="closechat">Close window</li>
+    </ul>
+</div>
+<div class="chat-content">
+    <div class="chat-messages" id="chat-messages">
+        {% for msg in chat_messages %}
+        <div class="speech {% if msg.clicodesent.clicode == member.clicode %}bubble{%else%}my-bubble{%endif%}">
+            {{ msg.mescontent|safe }}
+        </div>
+        {% empty %}
+        <div class="speech-suggestion">Chat with @{{member.cliusername}}!</div>
+        {% endfor %}
+</div>
+    <div class="item-container chat-stickers">
+        <ul>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/actividad_01.png' %}" alt="Beer" title="Beer" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/actividad_02.png' %}" alt="Chicken" title="Chicken" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/adulto_01.png' %}" alt="Good moments" title="Good moments" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/adulto_02.png' %}" alt="Good moments" title="Good moments" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/beso_01.png' %}" alt="Kissess" title="Kissess" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/beso_02.png' %}" alt="Kissess" title="Kissess" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/coqueto_01.png' %}" alt="Flirtation" title="Flirtation" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/coqueto_02.png' %}" alt="Flirtation" title="Flirtation" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/coqueto_03.png' %}" alt="Flirtation" title="Flirtation" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/coqueto_04.png' %}" alt="Flirtation" title="Flirtation" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/regalo_01.png' %}" alt="Gift" title="Gift" /></li>
+            <li><img class="img_sticker" src="{% static 'dateSite/img/stickers/regalo_02.png' %}" alt="Gift" title="Gift" /></li>
+        </ul>
+    </div>
+    <div class="item-container chat-emojis">
+        <ul>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_1.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_2.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_3.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_4.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_5.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_6.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_7.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_8.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_9.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_10.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_11.png' %}" alt="Emoticon" title="Emoticon" /></li>
+            <li><img class="img_emoticon" src="{% static 'dateSite/img/emojins/emojin_12.png' %}" alt="Emoticon" title="Emoticon" /></li>
+        </ul>
+    </div>
+    <div class="chat-box">
+        <div class="chat-item text">
+            <img src="{% static 'dateSite/img/action-chat.png' %}" alt="write" />
+        </div>
+        <div class="chat-item emojis" id="emojin">
+            <img src="{% static 'dateSite/img/emojis-chat.png' %}" alt="emojis" />
+        </div>
+        <div class="chat-item stickers" id="sticker">
+            <img src="{% static 'dateSite/img/stickers-chat.png' %}" alt="stickers" />
+        </div>
+        <form class="chat-text">
+            {% csrf_token %}
+            <div id="empty-message" class="empty-message"><button class="close">x</button>Type your message, please</div>
+            <div id="message" class="input-message" contenteditable="true"></div>
+            <input id="send-message" class="input-button" type="button" value="SEND" />
+        </form>
+        <div class="characters-count"><span id="caracteres">160</span> &nbsp;remaining characters</div>
+    </div>
+</div>
+<input type="hidden" id="reciever" value="{{member.clicode}}">

@@ -1,0 +1,274 @@
+{% extends './base.html' %}
+{% load static from staticfiles %}
+{% load extra_filters %}
+{% load sass_tags %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'ajaxuploader/css/fileuploader.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dateSite/css/jquery-ui.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/profile.scss' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile">
+    <div class="picture-profile">
+        <div class="pic-container">
+            {% if member.profile_picture %}
+                <img id="picture-preview" src="{{ member.profile_picture }}" class="profile-img thumb" type="3" data-id="{{ member.profile_picture.piccode }}" data-desc="{{ member.profile_picture.picdescription }}" data-pics="" style="width: 1px; height: 1px;"/>
+            {% else %}
+                <img id="picture-preview" src="{% static 'dateSite/img/default.png' %}" class="profile-img thumb" type="3" />
+            {% endif %}
+            <strong>
+                @{{ member.cliusername }}
+                {% if member.clibirthdate %}
+                    , {{ member.age }}
+                {% endif %}
+            </strong>
+            {% if member.clicode == user.pk %}
+            <div class="save-profile-pic">
+                <img class="icon-pic" src="{% static 'dateSite/img/accept.png' %}" style="width: 1px; height: 1px;"/>
+                <div class="icon-text">Save</div>
+            </div>
+            <div class="cancel-profile-pic">
+                <img class="icon-pic" src="{% static 'dateSite/img/cancel.png' %}" style="width: 1px; height: 1px;"/>
+                <div class="icon-text">Cancel</div>
+            </div>
+            <div class="update-profile-container">
+                <form id="update-profile" class="{% if member.profile_picture %}action-icon{%else%}action-icon-active{%endif%}" method="POST" enctype="multipart/form-data" title="Update my profile picture">
+                    {% csrf_token %} {{ upload_profile }}
+                </form>
+                {% include './upload_template.html' %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="basic-info">
+            {% if member.cliname %}
+                {{ member.cliname }}
+            {% endif %} <br />
+            {% if member.citcode %}
+                {{ member.citcode }}
+            {% endif %}
+        </div>
+        {% if member.clicode == user.pk %}
+        <div class="percentage container-box">
+            {{ profile_percentage|floatformat:0 }}% complete
+            <progress id="profile_percentage" class="progress progress-striped progress-info progress-animated" max="100">
+            </progress>
+        </div>
+        {% else %}
+        <a href="/inbox/{{ member.cliusername }}">
+            <div id="inbox_{{ member.clicode }}" class="action-btn btn-mail">MAIL</div>
+        </a>
+        <div id="iconchat_{{ member.clicode }}" class="action-btn btn-chat action-icons">CHAT</div>
+        {% endif %}
+    </div>
+    <div class="right-box">
+        <div class="preference">
+            {{ member.gencode }}
+            {% if member.marcode %}
+                &mdash; <label>{{ member.marcode }}</label>
+            {% endif %}
+        </div>
+        <div class="about">
+            {% if member.clidescription %}
+                <span><strong>About me: &nbsp;</strong>{{ member.clidescription }}</span>
+            {% else %}
+                <span style="text-align: center;">
+                {% if member.clicode == user.pk %}
+                    You don't add any information yet. <a href="{% url 'dateSite:edit_profile' slug=user.username %}">Click to edit <img src="{% static 'dateSite/img/icons/edit.png' %}" class="icon"/></a>
+                {% else %}
+                    This member didn't add any information yet.
+                {% endif %}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="{% if member.clicode == user.pk %}member-description{%else%}member-description-row{%endif%}" id="description-box">
+    {% if not member.bodycode and not member.heicode and not member.weicode and not member.eyecode and not member.haicode and not member.frecodedrink and not member.frecodesmoke and not member.zodcode and not member.relcode and not member.chicode and not member.educode and not member.ocucode and not member.lancodefirst %}
+        <span style="text-align: center;">
+            <hr class="style">
+            {% if member.clicode == user.pk %}
+            You don't add any information yet. <a href="{% url 'dateSite:edit_profile' slug=user.username %}">Click to edit <img src="{% static 'dateSite/img/icons/edit-gray.png' %}" class="icon"/></a>
+            {% else %}
+            This member didn't add any information yet.
+            {% endif %}
+            <hr class="style">
+        </span>
+    {% else %}
+        {% if member.bodycode or member.heicode or member.weicode or member.eyecode or member.haicode %}
+        <div class="column">
+            <strong>
+                {% if member.cliusername|upper|endswith:"S" %}
+                    {{ member.cliusername }} description
+                {% else %}
+                    {{ member.cliusername }}'s description
+                {% endif %}
+            </strong>
+            <ul>
+                {% if member.bodycode %}
+                <li>
+                    <i>Body type:</i> {{ member.bodycode }}
+                </li>
+                {% endif %}
+                {% if member.heicode %}
+                    <li>
+                        <i>Height:</i> {{ member.heicode }}
+                    </li>
+                    {% endif %}
+                    {% if member.weicode %}
+                    <li>
+                        <i>Weight:</i> {{ member.weicode }}
+                    </li>
+                    {% endif %}
+                    {% if member.eyecode %}
+                    <li>
+                        <i>Eyes color:</i> {{ member.eyecode }}
+                    </li>
+                    {% endif %}
+                    {% if member.haicode %}
+                    <li>
+                        <i>Hair:</i> {{ member.haicode }}
+                        {% if member.hlecode %}
+                        & {{ member.hlecode }}
+                        {% endif %}
+                    </li>
+                    {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if member.frecodedrink or member.frecodesmoke or member.zodcode or member.relcode or member.chicode %}
+        <div class="column">
+            <strong>Complement</strong>
+            <ul>
+                {% if member.frecodedrink %}
+                <li>
+                    <i>Drink:</i> {{ member.frecodedrink }}
+                </li>
+                {% endif %}
+                {% if member.frecodesmoke %}
+                <li>
+                    <i>Smoke:</i> {{ member.frecodesmoke }}
+                </li>
+                {% endif %}
+                {% if member.zodcode %}
+                <li>
+                    <i>Zodiac Sign:</i> {{ member.zodcode }}
+                </li>
+                {% endif %}
+                {% if member.relcode %}
+                <li>
+                    <i>Religion Belief:</i> {{ member.relcode }}
+                </li>
+                {% endif %}
+                {% if member.chicode %}
+                <li>
+                    <i>Have children:</i> {{ member.chicode }}
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if member.educode or member.ocucode or member.lancodefirst %}
+        <div class="column">
+            <strong>Work and education</strong>
+            <ul>
+                {% if member.educode %}
+                <li>
+                    <i>Education Level:</i> {{ member.educode }}
+                </li>
+                {% endif %}
+                {% if member.ocucode %}
+                <li>
+                    <i>Occupation:</i> {{ member.ocucode }}
+                </li>
+                {% endif %}
+                {% if member.lancodefirst %}
+                    <i>Languages:</i>
+                    <li><i>Native:</i> {{ member.lancodefirst }}</li>
+                    {% if member.lancodesecond %}
+                        <li>
+                            <i>Second:</i> {{ member.lancodesecond }}
+                            {% if member.langlevel %}
+                                {{ member.langlevel }} %
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+    {% endif %}
+    </div>
+    <div class="albums">
+        <div class="public">
+        {% if public_album %}
+            <div class="album-name title">
+                {% if member.clicode == user.pk %}
+                <div class="album-input-description"><input type="text" id="edit-album" value="{{album_data.phaname}}" name="edit-album"></div>
+                <div class="album-button" title="Change album name" data-toggle="tooltip"></div>
+                {% endif %}
+            </div>
+            {% with public_album|apics_string as pics %}
+            <div class="public-album album-box">
+                <img data-id="{{ public_album.0.piccode }}" src="{{ public_album.0.picpath.url }}" class="thumb" data-pics="{{pics}}" data-index="0" data-desc="{{ public_album.0.picdescription }}" type="1">
+            </div>
+            {% endwith %}
+        {% else %}
+            <div class="album-name title">Public Album</div>
+            <div class="public-album album-box"></div>
+        {% endif %}
+        </div>
+        <div class="private" id="client-albums">
+            <div class="title">
+                Private Albums
+                {% if member.clicode == user.pk %} <button id="add-album" class="btn btn-primary">Add Album</button> {% endif %}
+            </div>
+            <div class="arrow left"><img src="{% static 'dateSite/img/left-arrow.png' %}"></div>
+            <div class="albums-container">
+                <div class="albums-row">
+                {% if private_albums %}
+                    {% for album in private_albums %}
+                        <div class="private-album album-box">
+                        {% with album.pictures|apics_string as pics %}
+                            {% if member.clicode == user.pk or album.album.phacode in private_collection%}
+                                <img data-id="{{album.album.phacode}}" src="{{ album.pictures.0.picpath.url }}" class="thumb" data-pics="{{pics}}" data-index="0" data-desc="{{ album.pictures.0.picdescription }}" >
+                            {% else %} <!--- Temporal solution for img witout thumbnail -->
+                                <img data-id="{{album.album.phacode}}" src="{% if album.pictures.0.picthumb %}{{ album.pictures.0.picthumb.url }}{%else%}{% static 'dateSite/img/blurred.png'%}{%endif%}" class="private-thumb" type="2" data-index="0">
+                            {% endif %}
+                        {% endwith %}
+                            {% if member.clicode == user.pk %}<a href="#" onClick="deleteAlbum({{album.album.phacode}});" class="delete" title="Delete">x</a>{% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <label class="message">No albums to show</label>
+                {% endif %}
+                </div>
+            </div>
+            <div class="arrow right"><img src="{% static 'dateSite/img/right-arrow.png' %}"></div>
+        </div>
+    </div>
+    <div id="inb_picture" class="inb_picture">
+        <img src="{% static 'dateSite/img/left-arrow.png' %}" class="arrow left" id="left-arrow" alt="Left arrow">
+        <div class="image-container">
+            <img id="big_picture" src="" alt="" class="inb_img">
+            <div class="description" id="pic-desc"></div>
+            {% if member.clicode == user.pk %}
+            <img src="{% static 'dateSite/img/action-options.png' %}" class="action-options" id="action-options" alt="actions">
+            <ul class="list-btn" id="list-btn">
+                <li class="list-item" id="make_profile">Make profile picture</li>
+                <li class="list-item" id="picture_description">Edit description</li>
+                <li class="list-item" id="delete_picture" title="Delete">Delete Picture</li>
+            </ul>
+            {% endif %}
+        </div>
+        <img src="{% static 'dateSite/img/right-arrow.png' %}" class="arrow right" id="right-arrow" alt="Right arrow">
+        <img id="close_big_picture" src="{% static 'dateSite/img/close_button.png' %}" class="close" alt="Close">
+    </div>
+</div>
+{% include './modal_dialog.html' %}
+{% endblock %}
+
+{% block scripts %}
+{% include "./_init_profile.html" %}
+{% endblock %}

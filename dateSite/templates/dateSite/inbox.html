@@ -1,0 +1,303 @@
+{% extends './base.html' %}
+{% load static from staticfiles %}
+{% load extra_filters %}
+{% load sass_tags %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/inbox.scss' %}">
+{% endblock %}
+
+{% block content %}
+<input type="hidden" val="{{ mail_to.clicode }}" id="mail_to" data-username="{{ mail_to.cliusername }}"/>
+<div id="div_inbox" class="inbox">
+    <div class="clients-mail">
+        <button type="button" class="new_mail" name="new_mail" id="new_mail" >
+            COMPOSE
+        </button>
+        <!--Listado de los correos recibidos -->
+        <div class="contenedor-inbox">
+            <ul class="clientsmyinbox">
+            {% for inbox in list_inbox  %}
+                {% inbox_with inbox.inbcode as client %}
+                {% if user.pk == inbox.clicodesent.clicode %}
+                    <li name="items-list-mail" data-code="{{ inbox.inbcode }}" class="read">
+                {% else %}
+                    {% if inbox.inbread %}
+                    <li name="items-list-mail" data-code="{{ inbox.inbcode }}" class="read">
+                    {% else %}
+                    <li name="items-list-mail" data-code="{{ inbox.inbcode }}" class="not-read">
+                    {% endif %}
+                {% endif %}
+                    <div class="block-identity">
+                        {% if client.profile_picture %}
+                        <img class="itemimage" src="{{ client.profile_picture }}" alt="@{{ client.cliusername }}">
+                        {% else %}
+                        <img class="itemimage" src="{% static 'dateSite/img/default_profile.png' %}" alt="@{{ client.cliusername }}">
+                        {% endif %}
+                    </div>
+                    <div class="info-message">
+                        <span class="itemname">
+                            {% if client.age != 0 %}
+                                {% if client.cliusername|length < 10 %}
+                                @{{ client.cliusername }}, {{ client.age }}
+                                {% else %}
+                                @{{ client.cliusername|truncatechars:10 }}
+                                {% endif %}
+                            {% else %}
+                                @{{ client.cliusername }}
+                            {% endif %}
+                        </span>
+                        {% if client.cliname %}
+                            <span class="itemmessage">{{ client.cliname }}</span>
+                        {% endif %}
+                        <span class="itemtitle">{{ inbox.short_title }}</span>
+                    </div>
+                    <div class="tips-message">
+                        <span class="tipdate">{{ inbox.formatted_short_inbsenddate }}</span>
+                        <span class="tipstatus">
+                            {% if user.pk == inbox.clicoderecieved.clicode %}
+                                Recieved
+                            {% else %}
+                                Sent
+                            {% endif %}
+                        </span>
+                        {% if inbox.inbread %}
+                            <img class="sobre" src="{% static 'dateSite/img/' %}gris_02.png" alt="Message read">
+                        {% else %}
+                            <img class="sobre" src="{% static 'dateSite/img/' %}gris_01.png" alt="Message not read">
+                        {% endif %}
+                    </div>
+                </li>
+                {% empty %}
+                <li class="no-list-mails">No mails in this list.</li>
+            {% endfor %}
+        </ul>
+        </div>
+        <!--Fin del listado de los correos recibidos -->
+    </div>
+    <div class="list-mails">
+        {% if inbox_not_read %}
+        <div class="list-sugges-notread">
+            <ul class="ul-sugges-notread">
+            {% for inbox in inbox_not_read %}
+            <li class="item-sugges-notread">
+                <div class="inb-profile-member">
+                    {% if inbox.clicodesent.profile_picture %}
+                    <img id="memberpicture_{{ inbox.clicodesent.clicode }}" src="{{ inbox.clicodesent.profile_picture }}" alt="{{ inbox.clicodesent.cliusername }}" title="{{ inbox.clicodesent.cliusername }}" />
+                    {% else %}
+                    <img id="memberpicture_{{ inbox.clicodesent.clicode }}" src="{% static 'dateSite/img/default_profile.png' %}" alt="{{ inbox.clicodesent.cliusername }}" title="{{ inbox.clicodesent.cliusername }}" />
+                    {% endif %}
+                    {% if inbox.clicodesent.cliverified %}
+                    <div class="check-mark">
+                        <img src="{% static 'dateSite/img/check.png' %}" title="Verified member" data-toggle="tooltip" />
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="inb-summary">
+                    <p class="inb-user">
+                        {% if inbox.clicodesent.age != 0 %}
+                            @{{ inbox.clicodesent.cliusername }}, {{ inbox.clicodesent.age }}
+                        {% else %}
+                            @{{ inbox.clicodesent.cliusername }}
+                        {% endif %}
+                    </p>
+                    <p class="inb-city">
+                        {% if inbox.clicodesent.citcode %}
+                        <label class="truncate">{{ inbox.clicodesent.citcode }}<label>
+                        {% endif %}
+                    </p>
+                    <p class="inb-title">
+                        {{inbox.inbtitle|truncatechars:30}}
+                    </p>
+                </div>
+                <div class="inb-buttons">
+                    <input type="button" id="view_inbox_{{inbox.inbcode}}" name="view_inbox" value="VIEW INBOX" class="view_inbox" data-code="{{inbox.inbcode}}" data-origin="{% if inbox.inbcodeorigin %}{{inbox.inbcodeorigin}}{% else %}{{inbox.inbcode}}{% endif %}" />
+                    {% if inbox.inbox_pictures %}
+                    <div class="qty_picture">{{inbox.inbox_pictures|length}}</div>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
+        {% else %}
+            {% if inbox_suggestions %}
+            <div class="list-sugges-mails">
+                <p class="title-inb-suggestions">Start talking, she is waiting for you</p>
+                <div class="inbox-options">
+                {% for member in inbox_suggestions %}
+                <div id="cli_inb_{{ member.clicode }}" class="inbox-profiles" data-username="{{member.cliusername}}" data-code="{{member.clicode}}">
+                    <div class="inbox-preview" onclick="composeInbox('{{member.clicode}},', '@{{member.cliusername}},')">
+                        <div class="inb-profile-member">
+                            {% if member.profile_picture %}
+                            <img id="memberpicture_{{ member.clicode }}" src="{{ member.profile_picture }}" alt="{{ member.cliusername }}" title="{{ member.cliusername }}" />
+                            {% else %}
+                            <img id="memberpicture_{{ member.clicode }}" src="{% static 'dateSite/img/default.png' %}" alt="{{ member.cliusername }}" title="{{ member.cliusername }}" />
+                            {% endif %}
+                            {% if member.cliverified %}
+                            <div class="check-mark">
+                                <img src="{% static 'dateSite/img/check.png' %}" title="Verified member" data-toggle="tooltip" />
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="inb-profile-info">
+                            <div class="{% if member.feecode %}{% else %}{% endif %}">
+                                <strong>
+                                    {% if member.age != 0 %}
+                                        {% if member.cliusername|length < 10 %}
+                                        @{{ member.cliusername }}, {{ member.age }}
+                                        {% else %}
+                                        @{{ member.cliusername|truncatechars:12 }},...
+                                        {% endif %}
+                                    {% else %}
+                                        @{{ member.cliusername }}
+                                    {% endif %}
+                                </strong>
+                                {% if member.citcode %}
+                                <br />
+                                <label class="truncate">{{ member.citcode|truncatechars:20 }}<label>
+                                {% else %}
+                                <br /><label class="truncate">&nbsp;</label>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif%}
+        {% endif %}
+        <div class="show-current-msg">current</div>
+        {% if inbox_not_read|length < 3 %}
+            {% if chat_suggestions %}
+            <div class="list-sugges-chats">
+                <p class="title-chat-suggestions">Every profile is a new opportunity for you. </p>
+                <div class="chats-options">
+                {% for member in chat_suggestions %}
+                <div id="cli_chat_{{ member.clicode }}" class="chat-profiles" data-username="{{member.cliusername}}" data-code="{{member.clicode}}">
+                    <div class="chat-picture">
+                        {% if member.profile_picture %}
+                        <img id="memberpicture_{{ member.clicode }}" src="{{ member.profile_picture }}" alt="{{ member.cliusername }}" title="{{ member.cliusername }}" />
+                        {% else %}
+                        <img id="memberpicture_{{ member.clicode }}" src="{% static 'dateSite/img/default.png' %}" alt="{{ member.cliusername }}" title="{{ member.cliusername }}" />
+                        {% endif %}
+                    </div>
+                    <div class="chat-start">CHAT NOW</div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal messages -->
+<div id="msgModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label class="message-title"></label>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="display-msg"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End modal messages -->
+
+<!-- Modal write/reply inbox -->
+<div id="writeInboxModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <div id="loading-image"><img src="{% static 'dateSite/img/ajax-loader.gif' %}"></div>
+        <div class="modal-body">
+            <button type="button" class="close">×</button>
+            <div class="header-forminbox">
+                <label for="recipient">Recipients
+                    <input type="text" name="recipient_description" id="recipient_description" value="" disabled="true" />
+                </label><br />
+                <label for="subject">Subject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="subject" name="subject" value="" />
+                </label>
+            </div>
+            <div class="footer-forminbox">
+                <div class="input_inbox" id="input_inbox" contenteditable="true">
+                    Type your message
+                </div>
+                <div class="input-buttons">
+                    <div class="send-img-preview" id="thumbsPreview">
+                        <div class="info-warnings">
+                            Pictures will send when you click on send mail.
+                        </div>
+                    </div>
+                    <form id="sendpic-form" method="POST" action="" enctype="multipart/form-data">
+                        {% csrf_token %} {{ upload_pictures_form }}
+                    </form>
+                    <form id="send_inbox" class="form_send_inbox">
+                        <input class="send_mail" value="SEND MAIL" name="send_mail" id="send_mail" type="button">
+                    </form>
+                    {% include './upload_template.html' %}
+                    <input value="" name="inbcodeorigin" id="inbcodeorigin" type="hidden" />
+                    <input name="recieved_mail" id="recieved_mail" type="hidden" value="" />
+                    {% if id_to %}
+                    <input type="hidden" name="id_to" id="id_to" value="{{id_to}}" />
+                    <input type="hidden" name="user_to" id="user_to" value="{{user_to}}" />
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End modal write/reply inbox -->
+<!-- Modal del Compose -->
+<div class="modal" id="recipientsModal" tabindex="-1">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+                SELECT THE MAIL RECIPIENTS
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <span class="recip_msg">Please, select at least 1 recipient.</span>
+            <div class="miscontactos" id="mis-contactos">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-close btn-secondary" data-dismiss="modal">
+                Close
+            </button>
+            <button type="button" id="btn-next" class="btn btn-next btn-primary">
+                Next
+            </button>
+        </div>
+    </div>
+</div>
+<!--End del modal del compose -->
+
+<!-- Div to show gallery -->
+<div id="inb_picture" class="inb_picture">
+    <div class="image-container">
+        <img id="big_picture" src="" alt="" class="inb_img">
+    </div>
+    <img id="close_big_picture" src="{% static 'dateSite/img/close_button.png' %}" class="close" alt="Close">
+</div>
+<!-- End div to show gallery -->
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ajaxuploader/js/fileuploader.js' %}"></script>
+<script src="{% static 'file_form/file_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'dateSite/js/inbox.js' %}"></script>
+{% endblock %}

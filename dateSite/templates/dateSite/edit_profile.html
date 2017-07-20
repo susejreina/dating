@@ -1,0 +1,101 @@
+{% extends './base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'ajaxuploader/css/fileuploader.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dateSite/css/jquery-ui.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/profile.scss' %}">
+{% endblock %}
+
+{% block content %}
+<div class="edit-profile" id="edit-profile">
+    <div class="top">
+        <h1 class="title">Edit my profile</h1>
+        <a href="{% url 'dateSite:profile' slug=user.username %}" class="link">Cancel</a>
+    </div>
+    <form class="edit-form" id="edit-form" method="post" action="{% url 'dateSite:edit_profile' slug=user.username %}" enctype="multipart/form-data">
+        <div class="picture-update">
+            <div class="pic-edit">
+                {% if client.profile_picture %}
+                <img id="memberpicture_{{ client.clicode }}" src="{{ client.profile_picture }}" alt="{{ client.cliname }}" style="width: 1px; height: 1px;" class="photo" /> {% else %}
+                <img id="memberpicture_{{ client.clicode }}" src="{% static 'dateSite/img/default_profile.png' %}" alt="{{ client.cliname }}" style="width: 1px; height: 1px;" class="photo" /> {% endif %}
+            </div>
+            <label class="show-pictures">Change my profile picture</label>
+        </div>
+        {% crispy form %}
+    </form>
+</div>
+</div>
+
+<div id="profilepicturesModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close">
+                ×
+            </button>
+            <h3>Select new profile picture</h3>
+        </div>
+        <div class="modal-body" id="body-select-pic">
+            <label class="msg" id="msg"></label>
+            <div class="upload-picture">
+                <h3>Add a new profile picture</h3>
+                <div class="container-pic">
+                    <img id="picture-preview" src="" class="thumb" />
+                </div>
+                <div class="save-profile-pic">
+                    <img class="icon-pic" src="{% static 'dateSite/img/accept.png' %}" />
+                    <div class="icon-text">Save</div>
+                </div>
+                <div class="cancel-profile-pic">
+                    <img class="icon-pic" src="{% static 'dateSite/img/cancel.png' %}" />
+                    <div class="icon-text">Cancel</div>
+                </div>
+                <div class="update-profile-container">
+                    <form id="update-profile" class="action-icon-active" method="POST" enctype="multipart/form-data" title="Update my profile picture">
+                        {% csrf_token %} {{ upload_profile }}
+                    </form>
+                    {% include './upload_template.html' %}
+                </div>
+            </div>
+            <div class="">
+                <hr>
+                <h3>Or select from your public pictures</h3>
+            </div>
+            {% if not public_pictures %}
+            <label class="msg">You haven't uploaded any public pictures</label> {% else %} {% for picture in public_pictures %}
+            <div class="fill-pic">
+                <img id="{{ picture.piccode }}" src="{{ picture }}" class="thumb" />
+            </div>
+            {% endfor %} {% endif %}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary close" id="btnCancel">Cancel</button> {% if public_pictures %}
+            <button type="button" class="btn btn-primary" id="btnYes">Save</button> {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal album errors messages -->
+<div id="messageModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <label class="message-title"></label>
+            <button type="button" class="close">
+                ×
+            </button>
+        </div>
+        <div class="modal-body">
+            <div id="display-msg"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary close">Ok</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% include "./_init_profile.html" %}
+{% endblock %}

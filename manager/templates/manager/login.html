@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% load static from staticfiles %}
+{% load filters %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="center">
+    <div class="form-container">
+        <h2>Login</h2>
+        <hr>
+        {% if error %}
+        <div class="alert alert-block alert-error">
+            <ul>
+                <li>{{error}}</li>
+            </ul>
+        </div>
+        {% endif %}
+        <form class="login-form" method="POST" action="{% url 'manager:manager_login' %}">
+            {% csrf_token %}
+            {% crispy login_form %}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends './base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load extra_filters %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src "dateSite/css/alert.scss" %}">
+{% endblock %}
+
+{% block content %}
+    <h2>My alerts</h2>
+    <div class="row">
+    {% for alert in all_notifications  %}
+        <div class="col-xs-12">
+            <div class="img-container">
+                {% if alert.clicodesent.profile_picture %}
+                <a href="{% url 'dateSite:profile' slug=alert.clicodesent %}">
+                    <img src="{{ alert.clicodesent.profile_picture }}" alt="{{ alert.clicodesent.cliusername }}" title="{{ alert.clicodesent.cliusername }}" />
+                </a>
+                {% else %}
+                <a href="{% url 'dateSite:profile' slug=alert.clicodesent %}">
+                    <img src="{% static 'dateSite/img/default_profile.png' %}" alt="{{ alert.clicodesent.cliusername }}" title="{{ alert.clicodesent.cliusername }}" />
+                </a>
+                {% endif %}
+            </div>
+            <div class="alert-description">
+                <a href="{% url 'dateSite:profile' slug=alert.clicodesent %}">
+                    @{{ alert.ntymessage }}
+                </a>
+                {% if alert.clicodesent.cliname %}
+                <div class="name">
+                    {{ alert.clicodesent.cliname }}
+                </div>
+                {% endif %}
+                {% if alert.clicodesent.clidescription %}
+                <div class="description">
+                    {{ alert.clicodesent.clidescription|truncatechars:100 }}
+                </div>
+                {% endif %}
+                {% if alert.clicodesent.citcode %}
+                <div class="city">
+                    {{ alert.clicodesent.citcode }}
+                </div>
+                {% endif %}
+                <span class="date">{{ alert.notdate }}</span>
+            </div>
+            <hr />
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'dateSite/js/notifications.js'%}">
+</script>
+{% endblock %}

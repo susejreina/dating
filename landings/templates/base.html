@@ -1,0 +1,28 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Dating site, online dating, free dating sites, online dating sites">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DatingLatinos.com</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'dateSite/img/favicon.ico' %}"/>
+    {% block linkcss %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+<script type="text/javascript" src="{% static 'dateSite/js/jquery.min.js' %}"></script>
+<script async type="text/javascript" src="{% static 'dateSite/js/DjangoAjax.js' %}"></script>
+<script async type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/855907826/?guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+{% block javascript %}
+{% endblock %}
+</html>

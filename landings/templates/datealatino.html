@@ -1,0 +1,146 @@
+{% extends './base.html' %}
+{% load sass_tags %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'landings/'|add:landing_name|add:'/style.scss' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main">
+    <div class="content-logo">
+        <img src="{% static 'landings' %}/{{ landing_name }}/logo.png " class="logo" />
+        <label class="slogan">Beautiful Latino People</label>
+    </div>
+    <div class="form">
+        <h2>Welcome to Dating Latino</h2>
+        <p>The new site for the latino community</p>
+        <form id="quick-subs" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {% crispy signup_form %}
+            {% crispy quick_form %}
+        </form>
+        <div class="terms">
+            By creating an account, you agree to our <a href="{% url 'dateSite:terms' %}">terms</a>
+            <br />
+            Complete your registration and you will receive a special welcome kit.
+            <br />
+            ​Don't be shy and give love a try!​            
+        </div>
+        <div class="disclaimer">
+            Already have an account? Then please <a href="{% url 'account_login' %}">log in</a>
+        </div>
+    </div>
+</div>
+<div class="text-content">
+    <h2>Dating Latinos</h2>
+    <p>is the fresh and new site where you will live incredible adventures</p>
+    <h1>WITH AMAZING NEW FRIENDS!</h1>
+</div>
+<div class="profiles">
+    <div class="row">
+        <div class="col-md-5ths">
+            <div class="fill-img">
+                <img src="{% static 'landings' %}/{{ landing_name }}/img/profile-01.jpg" />
+            </div>
+            <div class="info">
+                Ana, 21 <br />
+                Bogota
+            </div>
+            <hr>
+            <div class="lookingfor">
+                Looking for lovely people
+            </div>
+        </div>
+        <div class="col-md-5ths">
+            <div class="fill-img">
+                <img src="{% static 'landings' %}/{{ landing_name }}/img/profile-02.jpg" />
+            </div>
+            <div class="info">
+                Joe, 26 <br />
+                California
+            </div>
+            <hr>
+            <div class="lookingfor">
+                I want to meet a nice latino girl.
+            </div>
+        </div>
+        <div class="col-md-5ths">
+            <div class="fill-img">
+                <img src="{% static 'landings' %}/{{ landing_name }}/img/profile-03.jpg" />
+            </div>
+            <div class="info">
+                Caro, 23 <br />
+                Medellin
+            </div>
+            <hr>
+            <div class="lookingfor">
+                Ready to find my soulmate
+            </div>
+        </div>
+        <div class="col-md-5ths">
+            <div class="fill-img">
+                <img src="{% static 'landings' %}/{{ landing_name }}/img/profile-04.jpg" />
+            </div>
+            <div class="info">
+                Alan, 28 <br />
+                Cartagena
+            </div>
+            <hr>
+            <div class="lookingfor">
+                Want to have a good time.
+            </div>
+        </div>
+        <div class="col-md-5ths">
+            <div class="fill-img">
+                <img src="{% static 'landings' %}/{{ landing_name }}/img/profile-05.jpg" />
+            </div>
+            <div class="info">
+                Marcia, 22<br />
+                Cartagena
+            </div>
+            <hr>
+            <div class="lookingfor">
+                Let's know each other
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <h1>IT'S REAL SIMPLE</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{% static 'landings' %}/{{ landing_name }}/img/footer-01.jpg" />
+            <div class="info">
+                <h4>Create a Profile</h4>
+                With your best looking shoot
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="{% static 'landings' %}/{{ landing_name }}/img/footer-02.jpg" />
+            <div class="info">
+                <h4>Share your stories</h4>
+                With tons of cool and fun pictures of you
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="{% static 'landings' %}/{{ landing_name }}/img/footer-03.jpg" />
+            <div class="info">
+                <h4>Start chating</h4>
+                With great and amazing people
+            </div>
+        </div>
+    </div>
+    <div class="links">
+        <span> Copyright DatingLatinos.com.</span> |
+        <span><a href="{% url 'dateSite:policy' %}"> Privacy Policy</a></span> |
+        <span> All rights reserved.</span>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'landings' %}/{{ landing_name }}/home.js"></script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends './base.html' %}
+{% load static from staticfiles %}
+{% load sass_tags %}
+{% load extra_filters %}
+{% load crispy_forms_tags %}
+
+{% block linkcss %}
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'dateSite/css/main.scss' %}">
+{% endblock %}
+
+{% block content %}
+<ul class="client-list">
+    {% for member in members.0 %}
+    <li id="member_{{member.clicode}}" name="list-members" data-username="{{member.cliusername}}">
+        {% if member.profile_picture %}
+        <img src="{{ member.profile_picture }}" alt="{{ member.cliusername }}" title="{{ member.cliusername }}" />
+        {% else %}
+        <img src="{% static 'dateSite/img/default_profile.png' %}" alt="{{ member.cliusername }}" title="{{ member.cliusername }}" />
+        {% endif %}
+        {% if member.cliverified %}
+        <div class="user-verified">
+            <img src="{% static 'dateSite/img/user-verified.png' %}" title="Verified member" data-toggle="tooltip" />
+        </div>
+        {% endif %}
+        <div class="profile-info">
+            <div class="summary">
+                <div class="username">
+                    {% if member.age != 0 %}
+                        {% if member.cliusername|length < 12 %}
+                        @{{ member.cliusername }}, {{ member.age }}
+                        {% else %}
+                        @{{ member.cliusername|truncatechars:16 }}...
+                        {% endif %}
+                    {% else %}
+                        @{{ member.cliusername }}
+                    {% endif %}
+                </div>
+                <div class="city">
+                    {% if member.citcode %}{{ member.citcode|truncatechars:18 }}{% endif %}
+                </div>
+                <div class="btn-chat">CHAT NOW</div>
+            </div>
+            <div class="feeling">
+                {% if member.feecode %}
+                <img src="{% static '' %}dateSite/img/icons/{{ member.feecode.feeiconfile }}" alt="{{ member.feecode.feedescription }}" />
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% empty %}
+    <li class="no-results">
+        <p class="title">NOT RESULTS FOUND</p>
+        <p class="msg">Sorry we dont have any matches to show. Please open the value of the search filters.</p>
+    </li>
+    {% endfor %}
+</ul>
+<div class="loading" id="loading" style="display: none;">
+    <img src="{% static 'dateSite/img/icons/loader.gif' %}" />
+</div>
+<input type="hidden" id="ids" name="ids" value="{{members.0|concat_ids}}" />
+<input type="hidden" id="pages" name="pages" value="0" />
+<input type="hidden" id="page" name="page" value="0" />
+<input type="hidden" id="show_more" name="show_more" value="{{members.1}}" />
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'dateSite/js/main.js' %}"></script>
+{% endblock %}

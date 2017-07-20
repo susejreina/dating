@@ -1,0 +1,9 @@
+.container-main-verified { background: transparent url(../img/back_verified.png) no-repeat 82% 100%; background-size: contain; width: 100%; box-sizing: border-box; padding: 0px 23% 0px 12%; margin: 0px; }
+
+.container-main-verified .textverified { font-size: 0.7rem; line-height: 1.2rem; text-align: left; height: 2.7rem; color: #696969; padding: 0px 15% 0px 0px; box-sizing: border-box; width: 100%; margin-top: 15px; }
+
+.container-main-verified .home-subtitle { font-size: 1.2rem; text-align: left; padding: 1rem 0px; color: #696969; width: 100%; }
+
+.container-main-verified .ol-verified { margin: 0px; padding: 0px; color: #696969; width: 100%; font-size: 0.7rem; }
+
+/*# sourceMappingURL=/static/dateSite/css/verified.css.map */
