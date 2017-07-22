@@ -25,7 +25,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['chatdatting.us-east-1.elasticbeanstalk.com', # dominio amazon
                  'www.datinglatinos.com',
                  'datinglatinos.com',
-                 'localhost'] # IP ec2
+                 'localhost',
+                 '172.31.16.210',
+                 '54.146.164.110'] # IP ec2
 # prueba
 # Application definition
 
